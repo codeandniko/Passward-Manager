@@ -41,4 +41,7 @@ A secure and user-friendly password manager built with React, offering local sto
 - Export/Import encrypted password vault.
 
 ## 📁 Project Structure
+![image](https://github.com/user-attachments/assets/3d298124-96f7-42a6-a2bf-64857d2d1739)
+![image](https://github.com/user-attachments/assets/11f74f8a-9660-4e74-8984-4ec39c792b4b)
+
 
