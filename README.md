@@ -1,26 +1,44 @@
-# Passward-Manager
-Passward manager
-Key Features:
+# 🔐 Password Manager
 
-Local Storage Security:
+A secure and user-friendly password manager built with React, offering local storage and AES-256-GCM encryption for sensitive data.
 
-Passwords are securely stored in the browser's local storage, ensuring that they remain on the user's device and are not transmitted over the internet. This minimizes the risk of unauthorized access to sensitive information.
-User Authentication:
+## ✨ Key Features
 
-The app includes a basic authentication system that requires users to log in before accessing stored passwords. This ensures that only authorized users can view or manage the stored data.
-Add and Manage Passwords:
+### 🔒 Local Storage Security with AES-256-GCM Encryption
+- Passwords are **encrypted using AES-256-GCM** before being stored in the browser's LocalStorage.
+- AES-256-GCM provides **confidentiality, integrity, and authenticity** of data.
+- Data is decrypted only after successful authentication.
 
-Users can add new passwords by entering details such as the account name, username, and password. The app automatically saves this information in the local storage.
-Users can view a list of all stored passwords and edit or delete them as needed.
-Responsive Design:
+### 🔑 User Authentication
+- Basic login system to restrict access to stored passwords.
+- Ensures only authorized users can manage the password data.
 
-The app is designed to be fully responsive, providing a seamless experience across different devices, including desktops, tablets, and smartphones.
-Simple and Intuitive UI:
+### 📋 Add and Manage Passwords
+- Add new passwords with account name, username, and password.
+- View, edit, and delete saved entries.
+- All data operations are securely encrypted and stored locally.
 
-The user interface is clean and intuitive, making it easy for users of all technical levels to manage their passwords without confusion.
-Technology Stack:
+### 📱 Responsive Design
+- Fully responsive UI for seamless use across desktop, tablet, and mobile devices.
 
-React: The app is built using React, leveraging its component-based architecture for a modular and maintainable codebase.
-JavaScript: Core functionality, including password storage and local storage management, is implemented in JavaScript.
-CSS: The app's responsive and aesthetically pleasing design is achieved through custom CSS styling.
-LocalStorage API: The browser's LocalStorage API is used to store and retrieve password data.
+### 🧭 Simple and Intuitive UI
+- Clean and beginner-friendly interface.
+- No technical knowledge needed to manage passwords.
+
+## 🛠️ Technology Stack
+
+- **React** – Component-based architecture for scalable frontend development.
+- **JavaScript** – Core functionality including storage, encryption, and logic.
+- **Web Crypto API** – Secure AES-256-GCM encryption via the `SubtleCrypto` interface.
+- **LocalStorage API** – Encrypted data is saved and retrieved from the browser's local storage.
+- **CSS** – Custom styling for a modern and responsive design.
+
+## 📦 Future Improvements
+
+- Support for multiple users.
+- Database with end-to-end encryption.
+- Master password with biometric unlock.
+- Export/Import encrypted password vault.
+
+## 📁 Project Structure
+
