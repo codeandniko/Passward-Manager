@@ -13,10 +13,11 @@ import { Buffer } from 'buffer';
 dotenv.config()
 
 // Connection URL
-const url = 'mongodb://localhost:27017';
+const url = process.env.MONGO_URI;
 const client = new MongoClient(url);
 
 // Database Namenpm i dotenv
+
 
 const dbName = 'Passop';
 const app = express()
@@ -60,26 +61,56 @@ app.get('/', async (req, res) => {
 
 
 app.post('/', async (req, res) => {
-  const password = req.body;
+  try {
+    const password = req.body;
 
-  if (password.password) {
-    password.password = encrypt(password.password);
+    if (password.password) {
+      password.password = encrypt(password.password);
+    }
+
+    const db = client.db(dbName);
+    const collection = db.collection('passwoards');
+    const result = await collection.insertOne(password);
+
+    res.send({ success: true, result });
+  } catch (error) {
+    console.error("Error inserting password:", error);
+    res.status(500).send({ success: false, error: "Internal Server Error" });
   }
+});
 
+
+app.delete('/', async (req, res) => {
+  const { id } = req.body;
+  console.log("Delete request for id:", id); // <-- helpful logging
   const db = client.db(dbName);
   const collection = db.collection('passwoards');
-  const result = await collection.insertOne(password);
+  const result = await collection.deleteOne({ id });
+  console.log("Delete result:", result); // <-- shows matched/deleted count
   res.send({ success: true, result });
 });
 
-app.delete('/', async(req, res) => {
-  const passward = req.body
-  const db = client.db(dbName);
-  const collection = db.collection('passwoards'); 
-    const findResult = await collection.deleteOne(passward);
-  res.send({sucess: true,result: findResult})
-})
 
 app.listen(port, () => {
   console.log(`Example app listening on      http://localhost:${port}`)
 })  
+app.post('/suggest-password', (req, res) => {
+  const { site, username } = req.body;
+
+  if (!site || !username) {
+    return res.status(400).json({ error: 'Site and username are required' });
+  }
+
+  // Create a deterministic password hash (could also use random gen if you prefer)
+  const hash = crypto.createHmac('sha256', ENCRYPTION_KEY)
+    .update(site + username)
+    .digest('base64');
+
+  // Limit the password length and clean it up
+  const suggestedPassword = hash
+    .replace(/[^a-zA-Z0-9]/g, '')
+    .slice(0, 16) // 16-character suggestion
+    + '!@'; // add symbols for complexity
+
+  res.json({ password: suggestedPassword });
+});
