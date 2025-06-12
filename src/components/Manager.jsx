@@ -91,6 +91,25 @@ const Manager = () => {
             headers: { "Content-Type": "application/json" }
         });
     };
+    const suggestPassword = async () => {
+    if (form.site.length > 3 && form.username.length > 3) {
+        try {
+            const res = await fetch("http://localhost:3000/suggest-password", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ site: form.site, username: form.username }),
+            });
+            const data = await res.json();
+            setForm({ ...form, password: data.password });
+            toast('🔑 Suggested password added!', { theme: "dark" });
+        } catch (err) {
+            toast('❌ Failed to suggest password');
+        }
+    } else {
+        toast('❗ Please enter a valid Site & Username first');
+    }
+  };
+
 
     const editPassword = (id) => {
         console.log("Editing password with id ", id);
@@ -133,6 +152,18 @@ const Manager = () => {
                         name="site"
                     />
                     <div className="lordiconcopy flex w-full gap-8 justify-between">
+                       <button
+                            onClick={suggestPassword}
+                            className="lordiconcopy flex gap-2 justify-center border border-green-400 items-center bg-green-400 hover:bg-green-300 rounded-full px-4 py-2 w-fit"
+                        >
+                            <lord-icon
+                             src="https://cdn.lordicon.com/jrmyyzvw.json"
+                            trigger="hover"
+                            ></lord-icon>
+                            Suggest Password
+                        </button>
+
+
                         <input
                             value={form.username}
                             onChange={handleChange}
